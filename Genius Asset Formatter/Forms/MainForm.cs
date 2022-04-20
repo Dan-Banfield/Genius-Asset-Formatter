@@ -7,10 +7,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using DarkUI.Forms;
 
 namespace Genius_Asset_Formatter
 {
-    public partial class MainForm : Form
+    public partial class MainForm : DarkForm
     {
         public MainForm()
         {
