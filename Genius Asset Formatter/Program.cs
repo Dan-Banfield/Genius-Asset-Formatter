@@ -8,6 +8,9 @@ namespace Genius_Asset_Formatter
         [STAThread]
         static void Main()
         {
+#if DEBUG
+            Properties.Settings.Default.Reset();
+#endif
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             HandleLaunchMode();
