@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace Genius_Asset_Formatter
 {
-    public partial class Form1 : Form
+    public partial class MainForm : Form
     {
-        public Form1()
+        public MainForm()
         {
             InitializeComponent();
         }
