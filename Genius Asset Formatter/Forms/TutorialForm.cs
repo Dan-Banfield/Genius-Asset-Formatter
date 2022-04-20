@@ -37,7 +37,7 @@ namespace Genius_Asset_Formatter
             switch (tutorialEventNumber)
             {
                 case 1:
-                    tutorialLabel.Text = "This is the second tutorial step.";
+                    tutorialLabel.Text = "Firstly, download any Studio Genius Japan Inc game of your choice, and play up until around chapter three (or skip through until that point).";
                     break;
                 case 2:
                     tutorialLabel.Text = "This is the third tutorial step.";
@@ -50,8 +50,8 @@ namespace Genius_Asset_Formatter
 
         private void FinishTutorial()
         {
-            this.Hide();
             new MainForm().Show();
+            this.Hide();
         }
     }
 }

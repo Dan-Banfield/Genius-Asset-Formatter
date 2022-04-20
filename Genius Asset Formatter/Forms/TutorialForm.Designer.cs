@@ -32,15 +32,17 @@ namespace Genius_Asset_Formatter
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TutorialForm));
             this.tutorialLabel = new DarkUI.Controls.DarkLabel();
             this.nextButton = new DarkUI.Controls.DarkButton();
+            this.tutorialImageBox = new System.Windows.Forms.PictureBox();
+            ((System.ComponentModel.ISupportInitialize)(this.tutorialImageBox)).BeginInit();
             this.SuspendLayout();
             // 
             // tutorialLabel
             // 
-            this.tutorialLabel.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tutorialLabel.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tutorialLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
             this.tutorialLabel.Location = new System.Drawing.Point(12, 9);
             this.tutorialLabel.Name = "tutorialLabel";
-            this.tutorialLabel.Size = new System.Drawing.Size(702, 247);
+            this.tutorialLabel.Size = new System.Drawing.Size(702, 127);
             this.tutorialLabel.TabIndex = 0;
             this.tutorialLabel.Text = "Welcome! This tutorial will show you how to use this application, and how to extr" +
     "act assets from Studio Genius Japan Inc games.";
@@ -56,11 +58,21 @@ namespace Genius_Asset_Formatter
             this.nextButton.Text = "Next";
             this.nextButton.Click += new System.EventHandler(this.nextButton_Click);
             // 
+            // tutorialImageBox
+            // 
+            this.tutorialImageBox.Location = new System.Drawing.Point(17, 145);
+            this.tutorialImageBox.Name = "tutorialImageBox";
+            this.tutorialImageBox.Size = new System.Drawing.Size(697, 114);
+            this.tutorialImageBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.tutorialImageBox.TabIndex = 2;
+            this.tutorialImageBox.TabStop = false;
+            // 
             // TutorialForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(726, 344);
+            this.Controls.Add(this.tutorialImageBox);
             this.Controls.Add(this.nextButton);
             this.Controls.Add(this.tutorialLabel);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -70,6 +82,7 @@ namespace Genius_Asset_Formatter
             this.Name = "TutorialForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Genius Asset Formatter - Tutorial";
+            ((System.ComponentModel.ISupportInitialize)(this.tutorialImageBox)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -78,6 +91,7 @@ namespace Genius_Asset_Formatter
 
         private DarkUI.Controls.DarkLabel tutorialLabel;
         private DarkUI.Controls.DarkButton nextButton;
+        private System.Windows.Forms.PictureBox tutorialImageBox;
     }
 }
 
