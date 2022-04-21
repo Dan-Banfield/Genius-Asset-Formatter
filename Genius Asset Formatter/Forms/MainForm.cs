@@ -65,16 +65,19 @@ namespace Genius_Asset_Formatter
             PrepareForConversion();
 
             string fileNameWithoutExtension = string.Empty;
+            string outputFilePath = string.Empty;
 
             for (ushort i = 0; i < inputFiles.Length; i++)
             {
                 fileNameWithoutExtension = Path.GetFileNameWithoutExtension(inputFiles[i]);
+                outputFilePath = @"Output\" + fileNameWithoutExtension + GetFileExtension(inputFiles[i]);
 
                 statusLabel.Text = "Status: converting file: " + fileNameWithoutExtension;
 
                 await Task.Run(() => 
                 {
-                    File.Copy(inputFiles[i], @"Output\" + fileNameWithoutExtension + GetFileExtension(inputFiles[i]));
+                    if (File.Exists(outputFilePath)) File.Delete(outputFilePath);
+                    File.Copy(inputFiles[i], outputFilePath);
                 });
             }
 
