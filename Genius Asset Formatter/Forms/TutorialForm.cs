@@ -16,7 +16,13 @@ namespace Genius_Asset_Formatter
             InitializeComponent();
         }
 
+        #region Event Handlers
+
         private void nextButton_Click(object sender, EventArgs e) => NextTutorialStep();
+
+        #endregion
+
+        #region Methods
 
         private void NextTutorialStep()
         {
@@ -43,11 +49,11 @@ namespace Genius_Asset_Formatter
                     tutorialImageBox.Image = Properties.Resources.Tutorial_Image_2;
                     break;
                 case 5:
-                    tutorialLabel.Text = "That's where this app comes in! With it, you can convert these files into their correct formats.";
+                    tutorialLabel.Text = "Once you have found these files you need to get them onto your PC. You can use a free file-hosting website, such as Mega.nz, to upload the files and then download them onto your PC.";
                     tutorialImageBox.Image = null;
                     break;
                 case 6:
-                    tutorialLabel.Text = "Well, that's all there is to it! Thanks for using this application.";
+                    tutorialLabel.Text = "Finally, you can convert the asset files into files with propper file formats with this application so that you may use them anywhere without issues.";
                     nextButton.Text = "Done";
                     break;
                 default:
@@ -61,5 +67,7 @@ namespace Genius_Asset_Formatter
             new MainForm().Show();
             this.Hide();
         }
+
+        #endregion
     }
 }
