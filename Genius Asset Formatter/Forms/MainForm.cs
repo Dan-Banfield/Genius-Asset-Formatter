@@ -129,7 +129,7 @@ namespace Genius_Asset_Formatter
             ResetControlsState();
             MessageBox.Show("The assets were converted successfully!", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-            Process.Start(Directory.GetCurrentDirectory() + $@"\{outputDirectory}");
+            Process.Start(outputDirectory);
         }
 
         #endregion
