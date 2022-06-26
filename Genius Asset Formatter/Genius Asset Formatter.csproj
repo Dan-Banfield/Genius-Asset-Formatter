@@ -37,7 +37,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="DarkUI, Version=2.0.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\DarkUI.2.0.2\lib\DarkUI.dll</HintPath>
+      <HintPath>E:\Trainers\Modding\Genius.Asset.Formatter\DarkUI.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="System" />
@@ -52,7 +52,7 @@
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="TrID, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\TrIDEngine.1.2.4\lib\net40\TrID.dll</HintPath>
+      <HintPath>E:\Trainers\Modding\Genius.Asset.Formatter\TrID.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

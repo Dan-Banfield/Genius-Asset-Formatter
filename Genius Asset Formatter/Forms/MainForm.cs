@@ -1,10 +1,10 @@
-﻿using System;
+﻿using TrID;
+using System;
 using System.IO;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using DarkUI.Forms;
-using TrID;
 using System.Diagnostics;
+using System.Windows.Forms;
+using System.Threading.Tasks;
 
 namespace Genius_Asset_Formatter
 {
@@ -12,7 +12,7 @@ namespace Genius_Asset_Formatter
     {
         public MainForm()
         {
-            AppDomain.CurrentDomain.UnhandledException += (o, e) => MessageBox.Show("An error has occured! Please try again later.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            AppDomain.CurrentDomain.UnhandledException += (o, e) => MessageBox.Show("An error has occured! The application will now close.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             this.FormClosing += (o, e) => Process.GetCurrentProcess().Kill();
 
             InitializeComponent();
@@ -26,76 +26,110 @@ namespace Genius_Asset_Formatter
 
         #region Methods
 
-        private string GetFileExtension(string filePath)
-        {
-            return TrIDEngine.GetExtensionByFileContent(filePath);
-        }
-
-        private void ResetControlsState()
-        {
-            instructionsLabel.Text = "Please select the extracted assets to convert.";
-            selectAssetsButton.Enabled = true;
-            statusLabel.Text = "Status: Waiting...";
-        }
-
-        private void SetControlsConversionState()
-        {
-            instructionsLabel.Text = "Converting files...";
-            selectAssetsButton.Enabled = false;
-        }
-
-        private void FinishConversion()
-        {
-            ResetControlsState();
-
-            MessageBox.Show("The assets were converted successfully!", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-            Process.Start(Directory.GetCurrentDirectory() + @"\Output");
-        }
-
-        private void PrepareForConversion()
-        {
-            SetControlsConversionState();
-
-            if (!Directory.Exists("Output")) Directory.CreateDirectory("Output");
-        }
-
-        private async void ConvertFiles(string[] inputFiles)
-        {
-            PrepareForConversion();
-
-            string fileNameWithoutExtension = string.Empty;
-            string outputFilePath = string.Empty;
-
-            for (ushort i = 0; i < inputFiles.Length; i++)
-            {
-                fileNameWithoutExtension = Path.GetFileNameWithoutExtension(inputFiles[i]);
-                outputFilePath = @"Output\" + fileNameWithoutExtension + GetFileExtension(inputFiles[i]);
-
-                statusLabel.Text = "Status: converting file: " + fileNameWithoutExtension;
-
-                await Task.Run(() => 
-                {
-                    if (File.Exists(outputFilePath)) File.Delete(outputFilePath);
-                    File.Copy(inputFiles[i], outputFilePath);
-                });
-            }
-
-            FinishConversion();
-        }
-
         private void ShowFileSelectionDialogue()
         {
             using (OpenFileDialog ofd = new OpenFileDialog())
             {
                 ofd.Multiselect = true;
-                ofd.Title = "Select the extracted assets to convert.";
+                ofd.Title = "Select The Extracted Assets To Convert";
 
                 if (ofd.ShowDialog() == DialogResult.OK)
                 {
                     ConvertFiles(ofd.FileNames);
                 }
             }
+        }
+
+        private async void ConvertFiles(string[] inputFiles)
+        {
+            PreConversion();
+
+            string outputDirectory = AskForOutputDirectory();
+            CreateOutputDirectory(outputDirectory);
+
+            for (int i = 0; i < inputFiles.Length; i++)
+            {
+                string fileNameWithoutExtension = Path.GetFileNameWithoutExtension(inputFiles[i]);
+                string outputFilePath = $@"{outputDirectory}\" + fileNameWithoutExtension + GetFileExtension(inputFiles[i]).ToLower();
+
+                statusLabel.Text = "Status: converting file: " + fileNameWithoutExtension;
+
+                await Task.Run(() => 
+                {
+                    CopyFile(outputFilePath, inputFiles[i]);
+                });
+            }
+
+            FinishConversion(outputDirectory);
+        }
+
+        private void PreConversion()
+        {
+            SetControlsToConversionState();
+        }
+
+        private void SetControlsToConversionState()
+        {
+            #region Code Block
+
+            instructionsLabel.Text = "Converting files...";
+            selectAssetsButton.Enabled = false;
+
+            #endregion
+        }
+
+        private void ResetControlsState()
+        {
+            #region Code Block
+
+            instructionsLabel.Text = "Please select the extracted assets to convert.";
+            selectAssetsButton.Enabled = true;
+            statusLabel.Text = "Status: Waiting...";
+
+            #endregion
+        }
+
+        private string AskForOutputDirectory()
+        {
+            using (FolderBrowserDialog fbd = new FolderBrowserDialog())
+            {
+                fbd.Description = "Select An Output Directory";
+
+                if (fbd.ShowDialog() == DialogResult.OK) return fbd.SelectedPath;
+                return "Output";
+            }
+        }
+
+        private void CreateOutputDirectory(string directory)
+        {
+            if (!Directory.Exists(directory)) Directory.CreateDirectory(directory);
+        }
+
+        private string GetFileExtension(string filePath)
+        {
+            string result = string.Empty;
+
+            try { result = TrIDEngine.GetExtensionByFileContent(filePath); }
+            catch { }
+
+            if (!string.IsNullOrEmpty(result)) return result;
+            return ".json";
+        }
+
+        private void CopyFile(string outputFilePath, string inputFilePath)
+        {
+            if (File.Exists(outputFilePath)) File.Delete(outputFilePath);
+            File.Copy(inputFilePath, outputFilePath);
+        }
+
+        private void FinishConversion(string outputDirectory)
+        {
+            GC.Collect();
+
+            ResetControlsState();
+            MessageBox.Show("The assets were converted successfully!", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+            Process.Start(Directory.GetCurrentDirectory() + $@"\{outputDirectory}");
         }
 
         #endregion
